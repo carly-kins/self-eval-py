@@ -1,0 +1,48 @@
+#!/usr/bin/env python3
+
+# Based off of code from Federico Menozzi - Thanks Fed! https://github.com/fmenozzi/env/blob/master/scripts/links 
+
+import argparse
+import selfeval_process
+
+if __name__ == '__main__':
+    parser = argparse.ArgumentParser()
+    subparsers = parser.add_subparsers()
+    parser.set_defaults(func=selfeval_process.list_entries)
+
+    parser_list = subparsers.add_parser('ls', help='list all entries')
+    parser_list.add_argument('--last', action='store_true', help='display entries from a specified date to now (ex. since last checkin)')
+    parser_list.add_argument('--between', action='store_true', help='display entries between 2 specified dates')
+    parser_list.add_argument('--csv', action='store_true', help='display in csv format')
+    parser_list.add_argument('--doc', action='store_true', help='display evaluation output in word format')
+    parser_list.add_argument('--table', nargs='?')
+    parser_list.set_defaults(func=selfeval_process.list_entries)
+
+    parser_add = subparsers.add_parser('add', help='add new entry')
+    parser_add.add_argument('--git', action='store_true', help='add last git commit message as entry')
+    parser_add.add_argument('-n', '--notes', action='store_true', help='add notes to entry')
+    parser_add.set_defaults(func=selfeval_process.add_entry)
+
+    parser_rm = subparsers.add_parser('rm', help='remove entry')
+    parser_rm.add_argument('id', type=int, help='entry id (taken from \'self-eval ls\')')
+    parser_rm.set_defaults(func=selfeval_process.remove_entry)
+
+    parser_update = subparsers.add_parser('update', help='update entry')
+    parser_update.add_argument('id', type=int, help='entry id (taken from \'self-eval ls\')')
+    parser_update.add_argument('-e', '--entry', action='store_true', help='update entry')
+    parser_update.add_argument('-n', '--notes', action='store_true', help='update notes')
+    parser_update.add_argument('-t', '--tags', action='store_true', help='update tags')
+    parser_update.add_argument('-ty', '--types', action='store_true', help='update types')
+    parser_update.set_defaults(func=selfeval_process.update_entry)
+
+    parser_find = subparsers.add_parser('find', help='find links')
+    parser_find.add_argument('query', nargs='?', help='search query')
+    parser_find.add_argument('--csv', action='store_true', help='display in csv format')
+    parser_find.set_defaults(func=selfeval_process.find_entry)
+
+    parser_load = subparsers.add_parser('load', help='load links from csv')
+    parser_load.add_argument('csv_file', help='csv file')
+    parser_load.set_defaults(func=selfeval_process.load_entries)
+
+    args = parser.parse_args()
+    args.func(args)
