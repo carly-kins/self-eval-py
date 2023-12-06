@@ -1,6 +1,6 @@
 # Self-Eval CLI 
 
-Foobar is a Python and SQL-Lite CLI to make keeping track of self evaluations a little easier! 
+A Python and SQL-Lite CLI to make keeping track of self evaluations a little easier! 
 
 ## Installation
 
