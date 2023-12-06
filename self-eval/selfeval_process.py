@@ -3,8 +3,8 @@
 #File where most of the database processing occurs
 import csv
 import sqlite3
-import helpers.selfeval_vars as selfeval_vars
-import helpers.selfeval_generate as selfeval_generate
+import selfeval_vars
+import selfeval_generate
 
 import sys
 import questionary
