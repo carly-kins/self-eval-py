@@ -3,8 +3,8 @@
 # File where most of the output generation occurs
 
 import shutil
-import helpers.selfeval_vars as selfeval_vars
-import helpers.selfeval_process as selfeval_process
+import selfeval_vars
+import selfeval_process
 
 from pyutils import now_utc
 from docx import Document

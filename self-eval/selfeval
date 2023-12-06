@@ -3,7 +3,7 @@
 # Based off of code from Federico Menozzi - Thanks Fed! https://github.com/fmenozzi/env/blob/master/scripts/links 
 
 import argparse
-import helpers.selfeval_process as selfeval_process
+import selfeval_process as selfeval_process
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
