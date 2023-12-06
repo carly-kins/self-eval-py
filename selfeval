@@ -3,7 +3,7 @@
 # Based off of code from Federico Menozzi - Thanks Fed! https://github.com/fmenozzi/env/blob/master/scripts/links 
 
 import argparse
-import selfeval_process
+import helpers.selfeval_process as selfeval_process
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
@@ -15,7 +15,6 @@ if __name__ == '__main__':
     parser_list.add_argument('--between', action='store_true', help='display entries between 2 specified dates')
     parser_list.add_argument('--csv', action='store_true', help='display in csv format')
     parser_list.add_argument('--doc', action='store_true', help='display evaluation output in word format')
-    parser_list.add_argument('--table', nargs='?')
     parser_list.set_defaults(func=selfeval_process.list_entries)
 
     parser_add = subparsers.add_parser('add', help='add new entry')
@@ -35,13 +34,13 @@ if __name__ == '__main__':
     parser_update.add_argument('-ty', '--types', action='store_true', help='update types')
     parser_update.set_defaults(func=selfeval_process.update_entry)
 
-    parser_find = subparsers.add_parser('find', help='find links')
+    parser_find = subparsers.add_parser('find', help='find entries')
     parser_find.add_argument('query', nargs='?', help='search query')
     parser_find.add_argument('--csv', action='store_true', help='display in csv format')
     parser_find.set_defaults(func=selfeval_process.find_entry)
 
     parser_load = subparsers.add_parser('load', help='load links from csv')
-    parser_load.add_argument('csv_file', help='csv file')
+    parser_load.add_argument('csv_file', help='path to csv file')
     parser_load.set_defaults(func=selfeval_process.load_entries)
 
     args = parser.parse_args()
