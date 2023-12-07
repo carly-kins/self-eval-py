@@ -180,23 +180,60 @@ def find_entry(args):
 def load_entries(args):
     with open(args.csv_file, newline='') as csv_file:
         reader = csv.reader(csv_file, delimiter=',', quotechar='"')
+        table = args.table
         data = []
+        
         for row in reader:
             if not row:
                 continue
-            _, entry, types, notes, tags, date_added = row
-            print(f'Loading {entry}...')
-            data.append({
-                "entry": entry,
-                "types": types,
-                "notes": notes,
-                "tags": tags,
-                "date_added": date_added,
-            })
+            if table == 'evalEntries':
+                _, entry, types, notes, tags, date_added = row
+                print(f'Loading {entry}...')
+                data.append({
+                    "entry": entry,
+                    "types": types,
+                    "notes": notes,
+                    "tags": tags,
+                    "date_added": date_added,
+                })
+                query = 'INSERT INTO evalEntries VALUES(NULL, :entry, :types, :notes, :tags, :date_added);'
+                
+            elif table == 'types_table':
+                _, types= row
+                print(f'Loading {types}...')
+                data.append({
+                    "types": types,
+                })
+                query = 'INSERT OR IGNORE INTO types_table VALUES(NULL, :types);'
+
+            elif table == 'tags_table':
+                _, tags, tags_description, summary = row
+                print(f'Loading {tags}...')
+                data.append({
+                    "tags": tags,
+                    "tags_description": tags_description,
+                    "summary": summary,
+                })
+                query = 'INSERT OR IGNORE INTO tags_table VALUES(NULL, :tags, :tags_description, :summary);'
+            elif table == 'summary_table':
+                _, summary = row
+                print(f'Loading {summary}...')
+                data.append({
+                    "summary": summary,
+                })
+                query = 'INSERT OR IGNORE INTO summary_table VALUES(NULL, :summary);'
+
+            elif table == 'questions_table':
+                _, question_title, question_desc, types_id = row
+                print(f'Loading {entry}...')
+                data.append({
+                    "question_title": question_title,
+                    "question_desc": types,
+                    "types_id": notes,
+                })
+                query = 'INSERT OR IGNORE INTO questions_table VALUES(NULL, :question_title, :question_desc, :types_id);'
+
         con, cur = create_or_open_db()
-        cur.executemany(
-            'INSERT INTO evalEntries VALUES(NULL, :entry, :types, :notes, :tags, :date_added);',
-            data
-        )
+        cur.executemany(query, data)
         con.commit()
         con.close()

@@ -40,6 +40,7 @@ if __name__ == '__main__':
     parser_find.set_defaults(func=selfeval_process.find_entry)
 
     parser_load = subparsers.add_parser('load', help='load links from csv')
+    parser_load.add_argument('table', help='table to upload to')
     parser_load.add_argument('csv_file', help='path to csv file')
     parser_load.set_defaults(func=selfeval_process.load_entries)
 

@@ -8,9 +8,9 @@ HOME= os.getenv('HOME')
 # The name you want on your eval
 NAME = 'Carly' 
 # Where you want your database saved
-DB_PATH = f'{HOME}/dev/databases/evaluation/evaluation.db'
+DB_PATH = f'{HOME}/dev/bin/evaluation/evaluation.db'
 # Where your database schema is saved
-SCHEMA_PATH = f'{HOME}/dev/databases/evaluation/evaluation_schema.sql'
+SCHEMA_PATH = f'{HOME}/dev/bin/self-eval-py/evaluation_schema.sql'
 
 # Table names in the schema
 EVAL_TABLE = 'evalEntries'
